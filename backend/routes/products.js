@@ -1,8 +1,39 @@
 const express= require('express');
 const router=express.Router();
 const {Product}=require('../models/products');
+const {Category}=require('../models/category');
 const mongoose=require('mongoose')
+const multer=require('multer')
 
+const File_Type_Map={
+    'image/jpg':'jpg',
+    'image/jpeg':'jpeg',
+    'image/png':'png',
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const isValid=File_Type_Map[file.mimetype]
+        let uploadError=new Error('invalid image type');
+        if(isValid){
+           uploadError=null
+        }
+      cb(uploadError, 'public/upload')
+    //   cb is callback returned with file destination if
+    // error occur in storing
+    },
+    filename: function (req, file, cb) {
+        // One way
+    //   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) 
+    //   cb(null, file.fieldname + '-' + uniqueSuffix)
+    // 2nd way
+    const extension=File_Type_Map[file.mimetype]
+    const fileName=file.originalname.split(' ').join('-');
+    cb(null,`${fileName}-${Date.now()}.${extension}`)
+    }
+  })
+  
+const uploadOp = multer({ storage: storage })
 
 router.get(`/`,async (req,res)=>{
     // const pro={
@@ -35,16 +66,24 @@ router.get(`/:pid`,async (req,res)=>{
         }  
         res.send(prod);
         });
-router.post(`/`, async (req, res) =>{
+        // name of file field we are uploading from front-end 
+router.post(`/`,uploadOp.single('image'), async (req, res) =>{
+
         const category = await Category.findById(req.body.category);
         // if we are posting product with no category
         if(!category) return res.status(400).send('Invalid Category');
-    
-        let product = new Product({
+
+        const file=req.file;
+        if(!file) return res.status(400).send('No image in the request');
+        const fileName = file.filename
+        const basePath=`${req.protocol}://${req.get('host')}/public/upload/`;
+
+        let product = new Product({ 
             name: req.body.name,
-            description: req.body.description,
-            richDescription: req.body.richDescription,
-            image: req.body.image,
+            descr: req.body.descr,
+            richDesc: req.body.richDesc,
+            image: `${basePath}${fileName}`,
+             // "http://localhost:3000/public/upload/image-2323232"
             brand: req.body.brand,
             price: req.body.price,
             category: req.body.category,

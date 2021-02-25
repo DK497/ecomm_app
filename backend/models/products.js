@@ -6,6 +6,10 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    descr: {
+        type: String,
+        default:''
+    },
     richDesc: {
         type: String,
         default:''
