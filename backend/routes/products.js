@@ -77,6 +77,7 @@ router.post(`/`,uploadOp.single('image'), async (req, res) =>{
         if(!file) return res.status(400).send('No image in the request');
         const fileName = file.filename
         const basePath=`${req.protocol}://${req.get('host')}/public/upload/`;
+        // // "http://localhost:3000/public/upload/
 
         let product = new Product({ 
             name: req.body.name,
@@ -182,6 +183,37 @@ router.get(`/get/featured/:count`, async (req, res) =>{
         res.status(500).json({success: false})
     } 
     res.send(products);
+})
+// route to upload gallery images
+router.put('/gallery-images/:id',uploadOp.array('images',5),async (req, res)=> {
+    if(!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).send('Invalid Product Id')
+     }
+    const files=req.files;
+    let imagesPath=[];
+    const basePath=`${req.protocol}://${req.get('host')}/public/upload/`;
+    
+    if(files){
+      files.map(i=>{
+          imagesPath.push(`${basePath}${i.fileName}`)
+      })
+    }
+    
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            
+            images: imagesPath
+        },
+         
+        { new: true}
+    )
+
+    if(!product)
+         { return res.status(500).send('the product cannot be updated!')}
+
+    res.send(product);
+
 })
 
 module.exports=router;

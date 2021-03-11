@@ -19,6 +19,7 @@ app.options('*',cors());
 app.use(bp.json());
 app.use(morgan('tiny'));
 app.use(authjwt());
+app.use('/public/upload',express.static(__dirname+'/public/upload'))
 app.use(errorHandler);
 
 app.get('/',(req,res)=>{
