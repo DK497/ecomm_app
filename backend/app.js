@@ -45,8 +45,14 @@ mongoose.connect(process.env.conn_str,{
 .then(()=>console.log('DB ready'))
 .catch((err)=>console.log(err))
 
+// development
+// app.listen(3000,()=>{
+//     console.log(api);
+//     console.log('Server is runnin at port 3000');
+// });
 
-app.listen(3000,()=>{
-    console.log(api);
-    console.log('Server is runnin at port 3000');
-});
+// Production
+var server=app.listen(process.env.PORT||3000,()=>{
+    var port =server.address().port;
+    console.log(`Express working on port ${port}`)
+})
