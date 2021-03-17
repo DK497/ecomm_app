@@ -5,6 +5,8 @@ import Checkout from "../Screens/Cart//Checkout/Checkout";
 import CheckoutNav from './CheckoutNav';
 import Payment from '../Screens/Cart/Checkout/Payment';
 
+import Login from '../Screens/User/Login'
+
 
 
 const Stack=createStackNavigator()
@@ -19,13 +21,8 @@ function MyStack()  {
                     headerShown: false,
                 }}
             />
-            <Stack.Screen 
-                name='Checkout'
-                component={CheckoutNav}
-                options={{
-                    headerShown: true,
-                }}
-            />
+            
+            
         </Stack.Navigator>
     )
 }

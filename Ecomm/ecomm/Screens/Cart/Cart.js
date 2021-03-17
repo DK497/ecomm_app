@@ -1,7 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native'
-import { Container, Text, Left, Right, H1, ListItem, Thumbnail, Body, Button, Icon,Badge } from "native-base";
-import {SwipeListView  } from 'react-native-swipe-list-view';
+import {
+    Container, Text, Left, Right, H1,H2, ListItem, Thumbnail, Body, Button,
+    Icon, Badge
+} from "native-base";
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 
 var { height, width } = Dimensions.get('window')
@@ -10,6 +13,7 @@ import { connect } from "react-redux";//to have access to states in store a prop
 
 import * as actions from "../../redux/Actions/cartActions";
 import CartItem from './CartItem';
+import EasyButton from '../../shared/styledcomp/EasyButton';
 
 const mapStateToProps = (state) => {
     const { cartItems } = state
@@ -23,10 +27,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        clearItems: () =>dispatch(actions.clearCart()),
+        clearItems: () => dispatch(actions.clearCart()),
 
-        clearSingle:(i)=>dispatch(actions.removeFromCart(i))
-        
+        clearSingle: (i) => dispatch(actions.removeFromCart(i))
+
     }
 
 }
@@ -35,9 +39,9 @@ const mapDispatchToProps = (dispatch) => {
 const Cart = (props) => {
     var total = 0
 
-   props.cartItems.forEach(i=>(
-       total+=i.product.price
-   )  )
+    props.cartItems.forEach(i => (
+        total += i.product.price
+    ))
 
 
     return (
@@ -45,7 +49,9 @@ const Cart = (props) => {
             {
                 props.cartItems.length > 0 ?
                     <Container >
-                        <H1 style={{ alignSelf: 'center' }}>
+                        <H1 style={{ alignSelf: 'center',borderTopLeftRadius:10,
+                       borderTopRightRadius:10, backgroundColor:'#3b6fbf',color:'white',
+                       height:40 }}>
                             Cart </H1>
                         {/* {props.cartItems.map(i => {
                             return ( 
@@ -53,52 +59,58 @@ const Cart = (props) => {
                                <CartItem item={i}/>
                             )
                         })} */}
-                        <SwipeListView data={props.cartItems} 
-                        renderItem={(data)=><CartItem item={data}/>}
-                        // to access single item data.item.product
-                        renderHiddenItem={data=>(
-                            <View style={styles.hiddenContainer}>
-                                <TouchableOpacity style={styles.hiddenButton}
-                                 onPress={()=>props.clearSingle(data.item)}
-                                 >
+                        <View style={{margin:10,backgroundColor:'#304b75',
+                        borderBottomStartRadius:50,borderBottomEndRadius:50}}>
 
-                                    <Icon name='trash' color='white' size={20}/>
-                                </TouchableOpacity>
-                            </View>
-                        )}
-                        
-                        disableRightSwipe={true}
-                        previewOpenDelay={3000}
-                        friction={1000}
-                        tension={40}
-                        leftOpenValue={75}
-                        stopLeftSwipe={75}
-                        rightOpenValue={-75}
-                             />
+                            <H2 style={{alignSelf:'center',color:'white'}}>
+                                Login to checkout Cart products
+                        </H2>
 
+                        </View>
+                        <SwipeListView data={props.cartItems}
+                            renderItem={(data) => <CartItem item={data} />}
+                            // to access single item data.item.product
+                            renderHiddenItem={data => (
+                                <View style={styles.hiddenContainer}>
+                                    <TouchableOpacity style={styles.hiddenButton}
+                                        onPress={() => props.clearSingle(data.item)}
+                                    >
+
+                                        <Icon name='trash' color='white' size={20} />
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+
+                            disableRightSwipe={true}
+                            previewOpenDelay={3000}
+                            friction={1000}
+                            tension={40}
+                            leftOpenValue={75}
+                            stopLeftSwipe={75}
+                            rightOpenValue={-75}
+                        />
+                        <View></View>
                         <View style={styles.bottomContainer}>
 
                             <Left>
                                 <Text style={styles.price}>${total}</Text>
                             </Left>
-                           <View style={{justifyContent:'space-between'}}>
-                           <Right>
-                                <Button iconLeft transparent warning
-                                 onPress={props.clearItems}>
-                                    <Icon name='beer' />
-                                    <Text style={{ color: 'white' }}>Clear</Text>
-                                </Button>
-                            </Right>
+
+
                             <Right>
-                                <Button iconLeft dark 
-                                onPress={() => props.navigation.navigate('Checkout')}
-                                >
-                                    <Icon name='cog' />
-                                    <Text>Checkout</Text>
-                                </Button >
+
+                                <EasyButton danger medium
+                                    onPress={props.clearItems}>
+
+                                    <Text style={{ color: 'white' }}>Clear</Text>
+                                </EasyButton>
+
                             </Right>
-                           </View>
+
+
+
                         </View>
+
 
                     </Container> :
                     <Container style={styles.emptyContainer}>
@@ -129,8 +141,8 @@ const styles = StyleSheet.create({
         left: 0,
         backgroundColor: 'white',
         elevation: 20,
-        justifyContent:"space-evenly",
-        alignItems:'center'
+        justifyContent: 'space-between',
+        alignItems: 'center'
 
     },
     price: {

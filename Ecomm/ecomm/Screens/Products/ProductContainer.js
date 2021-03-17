@@ -105,7 +105,9 @@ const ProductContainer = (props) => {
 
     console.log(focus)
     return (
-        <>{loading===false?(<Container style={styles.container} >
+        <>
+        {loading===false?(
+        <Container style={styles.container} >
             <Header searchBar rounded>
                 <Item>
                     <Icon name="ios-search" />
@@ -121,12 +123,10 @@ const ProductContainer = (props) => {
                 <SearchProduct navigation={props.navigation}
                 prodfiltered={prodfiltered} />
             ) : (
-            <ScrollView style={{paddingBottom:40}}>
-                <View style={{
-                    // borderColor:'blue',borderWidth:5
-                }}>
+            <ScrollView >
+                
                     {/* cat contain categories id and name */}
-                    <View style={{  marginTop: 5 }}>
+                    <View >
                         <CategoryFilter cat={cat} categfilter={changeCtg}
                             pcateg={pcateg}
                             active={active} setactive={setactive}
@@ -143,8 +143,7 @@ const ProductContainer = (props) => {
                                  <ProductList
                                      navigation={props.navigation}
                                      key={item._id}
-                                     item={item}
-                                 />
+                                     item={item} />
                              )
                          })}
                      </View>
@@ -156,9 +155,10 @@ const ProductContainer = (props) => {
                     // )
 
                     }
-
                     
-                </View>
+
+                   
+                
             </ScrollView>
 
                 )}
@@ -178,11 +178,10 @@ const styles = StyleSheet.create({
     container: {
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
-        flex:1
       },
       listContainer: {
         height: height,
-       
+        flex: 1,
         flexDirection: "row",
         alignItems: "flex-start",
         flexWrap: "wrap",
@@ -191,7 +190,6 @@ const styles = StyleSheet.create({
       cent: {
           justifyContent: 'center',
           alignItems: 'center'
-          
       }
 
 

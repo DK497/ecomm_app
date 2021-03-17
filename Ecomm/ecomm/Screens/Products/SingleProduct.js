@@ -5,6 +5,11 @@ import { Left, Right, Container, H1, Button } from "native-base";
 import { connect } from "react-redux";
 import * as actions from "../../redux/Actions/cartActions";
 import Toast from 'react-native-toast-message';
+import EasyButton from '../../shared/styledcomp/EasyButton';
+
+import TrafficLight from '../../shared/styledcomp/TrafficLight';
+
+
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -16,9 +21,30 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const SingleProduct = (props) => {
-
+    // route.params.item accessing data passed fom one screen
     const [item, setitem] = useState(props.route.params.item);
-    const [availability, setavailability] = useState('')
+
+    // state storing component renderable
+    const [availability, setavailability] = useState(null)
+    const [availabilitytext, setavailabilitytext] = useState('')
+
+    useEffect(() => {
+        if (props.route.params.item.countInStock == 0) {
+            setavailability(<TrafficLight unavailable></TrafficLight>);
+            setavailabilitytext("Unvailable")
+        } else if (props.route.params.item.countInStock <= 5) {
+            setavailability(<TrafficLight limited></TrafficLight>);
+            setavailabilitytext("Limited Stock")
+        } else {
+            setavailability(<TrafficLight available></TrafficLight>);
+            setavailabilitytext("Available")
+        }
+
+        return () => {
+            setavailability(null);
+            setavailabilitytext("");
+        }
+    }, [])
     return (
         <Container style={styles.container}>
 
@@ -39,30 +65,41 @@ const SingleProduct = (props) => {
                     <H1 style={styles.contentHeader}>{item.name}</H1>
                     <Text style={styles.contentText}>{item.brand}</Text>
                 </View>
-
-                <View style={styles.bottomContainer}>
-                    <Left>
-                        <Text style={styles.price}>$ {item.price}</Text>
-                    </Left>
-                    <Right>
-                        <Button warning onPress={() => {
-                            props.addItemToCart(item)
-                            Toast.show({
-                                topOffset:100,
-                                type:"success",
-                                text1:`${item.name} added to cart`,
-                                text2:"Press here to goto cart",
-                              //   onPress:()=>{
-                                    
-                              //   }
-                              })
-                        }}>
-                            <Text> Click  here </Text>
-                        </Button>
-                    </Right>
+                <View style={styles.availabilityContainer}>
+                    <View style={styles.availability}>
+                        <Text style={{ marginRight: 10 }}>
+                            Availability: {availabilitytext}
+                        </Text>
+                        {availability}
+                    </View>
+                    <Text>{item.description}</Text>
                 </View>
 
             </ScrollView>
+            <View style={styles.bottomContainer}>
+                <Left>
+                    <Text style={styles.price}>$ {item.price}</Text>
+                </Left>
+                <Right>
+
+                    <EasyButton primary medium onPress={() => {
+                        props.addItemToCart(item)
+                        Toast.show({
+                            topOffset: 100,
+                            type: "success",
+                            text1: `${item.name} added to cart`,
+                            text2: "Press here to goto cart",
+                            //   onPress:()=>{
+
+                            //   }
+                        })
+                    }}>
+                        <Text style={{ color: 'white' }}> Click  here </Text>
+                    </EasyButton>
+                </Right>
+            </View>
+
+
 
         </Container>
     )
@@ -81,7 +118,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 250
+        height: 150
     },
     contentContainer: {
         marginTop: 20,
@@ -119,5 +156,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(null,mapDispatchToProps)(SingleProduct);
+export default connect(null, mapDispatchToProps)(SingleProduct);
 

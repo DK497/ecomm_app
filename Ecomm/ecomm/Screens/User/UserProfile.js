@@ -1,6 +1,6 @@
 import React, { useContext, useState, useCallback } from 'react';
 import { View, Text, ScrollView, Button, StyleSheet } from 'react-native';
-import { Container } from "native-base"
+import { Container, Left, Right } from "native-base"
 import { useFocusEffect } from "@react-navigation/native"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -12,6 +12,7 @@ import baseURL from "../../assets/common/baseUrl"
 import AuthGlobal from "../../Context/store/AuthGlobal"
 import { logoutUser } from "../../Context/actions/Auth.actions"
 import { useEffect } from 'react/cjs/react.development';
+import EasyButton from '../../shared/styledcomp/EasyButton';
 
 const UserProfile = (props) => {
     const context = useContext(AuthGlobal)
@@ -37,10 +38,11 @@ const UserProfile = (props) => {
                         .get(`${baseURL}users/${context.stateUser.user.userId}`, {
                             headers: { Authorization: `Bearer ${res}` },
                         })
-                        .then((res) => { 
+                        .then((res) => {
                             // console.log(`from UserProfile useEffect`)
-                            setUserProfile(res.data)})
-                        .catch(err=>console.log('error '))
+                            setUserProfile(res.data)
+                        })
+                        .catch(err => console.log('error '))
                 })
                 .catch((error) => console.log('error is threr'))
 
@@ -69,7 +71,7 @@ const UserProfile = (props) => {
             <ScrollView contentContainerStyle={styles.subContainer}>
 
                 <Text style={{ fontSize: 30 }}>
-                    {userProfile ? userProfile.name : ""}
+                    Hello {userProfile ? userProfile.name : ""}
                 </Text>
 
                 <View style={{ marginTop: 20 }}>
@@ -81,11 +83,23 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
 
-                <View style={{ marginTop: 80 }}>
-                    <Button title={"Sign Out"} onPress={() => 
-                        
-                        logoutUser(context.dispatch)
-                    } />
+                <View style={{ marginTop: 80,flexDirection:'row' }}>
+                
+                        <EasyButton primary medium
+                            onPress={() => logoutUser(context.dispatch)} >
+                                <Text>Sign Out</Text>
+                        </EasyButton>
+                   
+                   
+
+                        <EasyButton secondary medium
+                            onPress={() => props.navigation.navigate('Checkout')}
+                        >
+
+                            <Text>Checkout</Text>
+                        </EasyButton >
+                  
+
                 </View>
 
                 {/* <View style={styles.order}>
@@ -103,6 +117,7 @@ const UserProfile = (props) => {
                         )}
                     </View>
                 </View> */}
+
 
             </ScrollView>
 

@@ -11,7 +11,7 @@ import ListItem from "./ListItem"
 import axios from "axios"
 import baseURL from "../../assets/common/baseUrl"
 import AsyncStorage from '@react-native-async-storage/async-storage'
-// import EasyButton from "../../Shared/StyledComponents/EasyButton";
+import EasyButton from "../../shared/styledcomp/EasyButton";
 
 var { height, width } = Dimensions.get("window")
 
@@ -85,21 +85,25 @@ const Products = (props) => {
         )
     }
 
-    // const deleteProduct = (id) => {
-    //     axios
-    //         .delete(`${baseURL}products/${id}`, {
-    //             headers: { Authorization: `Bearer ${token}` },
-    //         })
-    //         .then((res) => {
-    //             const products = productFilter.filter((item) => item.id !== id)
-    //             setProductFilter(products)
-    //         })
-    //         .catch((error) => console.log(error));
-    // }
+    // token will be present only if logged in as admin
+    const deleteProduct = (id) => {
+        axios
+            .delete(`${baseURL}products/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                const products = productFilter.filter((item) => item.id !== id)
+                setProductFilter(products)
+            })
+            .catch((error) => console.log(error));
+    }
+
 
     return (
         <View style={styles.container}>
-            {/* <View style={styles.buttonContainer}>
+
+            <View style={styles.buttonContainer}>
+                {/* to add new items */}
             <EasyButton
                 secondary
                 medium
@@ -124,7 +128,8 @@ const Products = (props) => {
                 <Icon name="plus" size={18} color="white" />
                 <Text style={styles.buttonText}>Categories</Text>
             </EasyButton>
-        </View> */}
+        </View>
+        
             <View>
                 <Header searchBar rounded>
                     <Item style={{ padding: 5 }}>
@@ -148,10 +153,10 @@ const Products = (props) => {
                     renderItem={({ item, index }) => (
                         <ListItem
                             {...item}
-                            // passing all props in destructure way
+                            // passing all props in destructured way
                             navigation={props.navigation}
                             index={index}
-                        // delete={deleteProduct}
+                            delete={deleteProduct}
                         />
 
                     )}
