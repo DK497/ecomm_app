@@ -11,9 +11,9 @@ const Banner = () => {
 
     useEffect(() => {
         setbanner([
-            "https://images.vexels.com/media/users/3/126443/preview2/ff9af1e1edfa2c4a46c43b0c2040ce52-macbook-pro-touch-bar-banner.jpg",
-            "https://pbs.twimg.com/media/D7P_yLdX4AAvJWO.jpg",
-            "https://www.yardproduct.com/blog/wp-content/uploads/2016/01/gardening-banner.jpg",
+            "https://media.comicbook.com/2020/06/dragon-ball-new-anime-series-multiverse-universes-1223414.jpeg?auto=webp&width=1200&height=628&crop=1200:628,smart",
+            "https://gintalifelessons.files.wordpress.com/2014/10/fgae1.jpg",
+            "https://www.tierragamer.com/wp-content/uploads/2020/04/Naruto-Bitme-Regreso-450x300.jpg",
         ])
         return () => {
             setbanner([]);

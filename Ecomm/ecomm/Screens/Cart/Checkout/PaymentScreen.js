@@ -193,7 +193,7 @@ const PaymentScreen = (props) => {
                                 onPress={() => confirmOrder()}>
                                 <Text>Place order</Text>
                             </EasyButton>
-                            <OpenURLButton url={receipt}>Download Receipt</OpenURLButton>
+                          
                         </View> :
                         <EasyButton secondary medium
                             onPress={() => props.navigation.navigate('Cart')}>

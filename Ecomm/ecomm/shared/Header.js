@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, Image, SafeAreaView, View } from "react-native"
+import { StyleSheet, Image, SafeAreaView, View,Text } from "react-native"
 
 const Header = () => {
     return(
@@ -9,6 +9,7 @@ const Header = () => {
                 resizeMode="contain"
                 style={{ height: 50 }}
             />
+            {/* <Text>Fast-Cart</Text> */}
         </SafeAreaView>
     )
 }

@@ -1,6 +1,6 @@
 import { Container, Header, Item, Icon, Input } from 'native-base';
 import React, { useEffect, useState,useCallback } from 'react'
-import { View, Text, StyleSheet, FlatList, ScrollView,Dimensions,ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, ScrollView,Dimensions,ActivityIndicator } from 'react-native'
 import Banner from '../../shared/Banner';
 import CategoryFilter from './CategoryFilter';
 import { useFocusEffect } from '@react-navigation/native';
@@ -15,8 +15,7 @@ import axios  from 'axios'
 
 var { height } = Dimensions.get('window')
 
-// const data = require('../../assets/data/products.json')
-// const categ = require('../../assets/data/categories.json')
+
 
 
 const numColumns = 2;
@@ -43,7 +42,7 @@ const ProductContainer = (props) => {
                 axios
                 .get(`${baseURL}products`)
                 .then((res)=>{
-                    console.log("heya")
+                    // console.log("heya")
                     // console.log(res)
                     setproducts(res.data);
                     setprodfiltered(res.data);
@@ -108,7 +107,7 @@ const ProductContainer = (props) => {
         <>
         {loading===false?(
         <Container style={styles.container} >
-            <Header searchBar rounded>
+            <Header searchBar rounded style={{backgroundColor:'#03f0fc'}}>
                 <Item>
                     <Icon name="ios-search" />
 
@@ -123,21 +122,21 @@ const ProductContainer = (props) => {
                 <SearchProduct navigation={props.navigation}
                 prodfiltered={prodfiltered} />
             ) : (
-            <ScrollView >
+            <ScrollView style={{flex:8}} >
                 
                     {/* cat contain categories id and name */}
-                    <View >
+                    <View style={{flex:2}}>
                         <CategoryFilter cat={cat} categfilter={changeCtg}
                             pcateg={pcateg}
                             active={active} setactive={setactive}
                         />
                     </View>
-                    <View >
+                    <View style={{flex:2}} >
                         <Banner />
                     </View>
                     {/* {console.log(pcateg.length)} */}
                     {pcateg.length>0?(
-                         <View style={styles.listContainer}>
+                         <View style={[styles.listContainer,{marginBottom:pcateg.length*100-((pcateg.length)/2)*50}]}>
                          {pcateg.map((item) => {
                              return(
                                  <ProductList
@@ -178,14 +177,17 @@ const styles = StyleSheet.create({
     container: {
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
+        
       },
       listContainer: {
         height: height,
-        flex: 1,
+        // flex: 5,
         flexDirection: "row",
         alignItems: "flex-start",
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
+        
+        
       },
       cent: {
           justifyContent: 'center',
