@@ -1,7 +1,5 @@
 package com.ecomm;
-
 import com.facebook.react.ReactActivity;
-
 public class MainActivity extends ReactActivity {
 
   /**
@@ -12,4 +10,5 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "ecomm";
   }
+   
 }

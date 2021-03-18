@@ -62,6 +62,17 @@ const Register = (props) => {
             extraHeight={200}
             enableOnAndroid={true}
         >
+            <View style={{alignItems:'center'}}>
+                    <Text style={{textAlign:'center',color:'blue'}}>Already a user</Text>
+                    <EasyButton
+                        large
+                        secondary 
+                        onPress={() => props.navigation.navigate("Login")}
+                    >  
+                        <Text style={{ color: "white" }}>Go to Login</Text>
+                    </EasyButton>
+                   
+                </View>
             <FormContainer title={"Register"}>
                 <Input
                     placeholder={"Email"}
@@ -98,17 +109,7 @@ const Register = (props) => {
                     </EasyButton>
 
                 </View>
-                <View>
-                    <Text style={{textAlign:'center',color:'blue'}}>Already a user</Text>
-                    <EasyButton
-                        large
-                        secondary
-                        onPress={() => props.navigation.navigate("Login")}
-                    >  
-                        <Text style={{ color: "white" }}>Go to Login</Text>
-                    </EasyButton>
-                   
-                </View>
+                
             </FormContainer>
         </KeyboardAwareScrollView>
     );

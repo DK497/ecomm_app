@@ -20,8 +20,8 @@ const paymentCards = [
 const Payment = (props) => {
 
     const order = props.route.params;
-
-    const [selected, setSelected] = useState();
+    
+    const [selected, setSelected] = useState('');
     const [card, setCard] = useState();
     return(
        <Container>
@@ -33,17 +33,17 @@ const Payment = (props) => {
            <Content>
                {methods.map((item, index) => {
                    return (
-                       <ListItem key={item.name} onPress={() => setSelected(item.value)}>
+                       <ListItem key={item.name} onPress={() => setSelected(item.name)}>
                            <Left>
                             <Text>{item.name}</Text>
                            </Left>
                            <Right>   
-                               <Radio selected={selected == item.value}/>
+                               <Radio selected={selected == item.name}/>
                            </Right>
                        </ListItem>
                    )
                })}
-               {selected == 3 ? (
+               {selected == 'Card Payment' ? (
                    <Picker
                     mode="dropdown"
                     iosIcon={<Icon name={"arrow-down"} />}
@@ -62,9 +62,12 @@ const Payment = (props) => {
                    </Picker>
                ) : null }
                <View style={{ marginTop: 60, alignSelf: 'center' }}>
+                 
                        <Button 
                        title={"Confirm"} 
-                       onPress={() => props.navigation.navigate("Confirm", { order })}/>
+                       onPress={() => {props.navigation.navigate("Confirm", { 
+                                                               order:order, payvia:selected })}}
+                                                               />
                </View>
            </Content>
        </Container>

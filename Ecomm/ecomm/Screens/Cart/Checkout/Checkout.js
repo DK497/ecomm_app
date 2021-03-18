@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Item, Picker, Toast, Button } from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import FormContainer from '../../../shared/Form/FormContainer'
 import Input from '../../../shared/Form/Input'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import EasyButton from '../../../shared/styledcomp/EasyButton'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import axios from "axios"
+import baseURL from "../../../assets/common/baseUrl"
+
+// Context
+import AuthGlobal from "../../../Context/store/AuthGlobal";
 
 import { connect } from 'react-redux';
 
@@ -21,6 +30,8 @@ const mapStateToProps = (state) => {
 
 const Checkout = (props) => {
 
+    const context = useContext(AuthGlobal)
+
     const [orderItems, setOrderItems] = useState();
     const [address, setAddress] = useState();
     const [address2, setAddress2] = useState();
@@ -28,10 +39,31 @@ const Checkout = (props) => {
     const [zip, setZip] = useState();
     const [country, setCountry] = useState();
     const [phone, setPhone] = useState();
-    const [user, setUser] = useState();
+    const [user, setUser] = useState();//this contains user id
+    const [userProfile, setUserProfile] = useState()
+    // this contains email and password
 
     useEffect(() => {
+
         setOrderItems(props.cartItems)
+        console.log('Checkout Screen',context.stateUser)
+
+        if(context.stateUser.isAuthenticated) {
+            setUser(context.stateUser.user.userId);
+            setUserProfile(context.stateUser.userProfile)
+           
+
+
+        } 
+        else {
+            props.navigation.navigate("Cart");
+            Toast.show({
+                topOffset: 60,
+                type: "error",
+                text1: "Please Login to Checkout",
+                text2: ""
+            });
+        }
 
         return () => {
             setOrderItems()
@@ -49,6 +81,7 @@ const Checkout = (props) => {
             shippingAddress2: address2,
             status: "3",
             user,
+            userProfile,
             zip,
         }
 
@@ -114,10 +147,10 @@ const Checkout = (props) => {
                         })}
                     </Picker>
                 </Item>
-                <View style={{ width: '80%',alignSelf:'stretch' }}>
-                    <Button light onPress={() => checkOut()}>
-                        <Text style={{width:'30%',alignSelf:'center',marginLeft:30}} >Confirm</Text>
-                    </Button>
+                <View style={{ width: '80%',alignItems:'center' }}>
+                    <EasyButton darkg medium onPress={() => checkOut()}>
+                        <Text style={{alignSelf:'center',color:'white'}} >Confirm</Text>
+                    </EasyButton>
                    
                 </View>
             </FormContainer>

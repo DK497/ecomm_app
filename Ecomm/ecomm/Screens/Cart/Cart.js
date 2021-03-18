@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native'
 import {
-    Container, Text, Left, Right, H1,H2, ListItem, Thumbnail, Body, Button,
+    Container, Text, Left, Right, H1, H2, ListItem, Thumbnail, Body, Button,
     Icon, Badge
 } from "native-base";
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -14,6 +14,9 @@ import { connect } from "react-redux";//to have access to states in store a prop
 import * as actions from "../../redux/Actions/cartActions";
 import CartItem from './CartItem';
 import EasyButton from '../../shared/styledcomp/EasyButton';
+
+// Context
+import AuthGlobal from "../../Context/store/AuthGlobal";
 
 const mapStateToProps = (state) => {
     const { cartItems } = state
@@ -37,6 +40,9 @@ const mapDispatchToProps = (dispatch) => {
 
 
 const Cart = (props) => {
+
+    const context = useContext(AuthGlobal)
+
     var total = 0
 
     props.cartItems.forEach(i => (
@@ -49,9 +55,11 @@ const Cart = (props) => {
             {
                 props.cartItems.length > 0 ?
                     <Container >
-                        <H1 style={{ alignSelf: 'center',borderTopLeftRadius:10,
-                       borderTopRightRadius:10, backgroundColor:'#3b6fbf',color:'white',
-                       height:40 }}>
+                        <H1 style={{
+                            alignSelf: 'center', borderTopLeftRadius: 10,
+                            borderTopRightRadius: 10, backgroundColor: '#3b6fbf', color: 'white',
+                            height: 40
+                        }}>
                             Cart </H1>
                         {/* {props.cartItems.map(i => {
                             return ( 
@@ -59,10 +67,12 @@ const Cart = (props) => {
                                <CartItem item={i}/>
                             )
                         })} */}
-                        <View style={{margin:10,backgroundColor:'#304b75',
-                        borderBottomStartRadius:50,borderBottomEndRadius:50}}>
+                        <View style={{
+                            margin: 10, backgroundColor: '#304b75',
+                            borderBottomStartRadius: 50, borderBottomEndRadius: 50
+                        }}>
 
-                            <H2 style={{alignSelf:'center',color:'white'}}>
+                            <H2 style={{ alignSelf: 'center', color: 'white' }}>
                                 Login to checkout Cart products
                         </H2>
 
@@ -104,6 +114,21 @@ const Cart = (props) => {
 
                                     <Text style={{ color: 'white' }}>Clear</Text>
                                 </EasyButton>
+
+                            </Right>
+                            <Right>
+                                {context.stateUser.isAuthenticated ?
+                        (         <EasyButton primary medium
+                                    onPress={() => props.navigation.navigate('Checkout')}>
+
+                                    <Text>Checkout</Text>
+                                </EasyButton >) : 
+                                (<EasyButton secondary medium
+                                    onPress={() => props.navigation.navigate('User',{ screen: 'Login' })}
+                                >
+
+                                    <Text>Login</Text>
+                                </EasyButton >)}
 
                             </Right>
 

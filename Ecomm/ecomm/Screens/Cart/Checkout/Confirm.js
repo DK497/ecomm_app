@@ -9,46 +9,53 @@ import Toast from "react-native-toast-message"
 import axios from "axios"
 import baseURL from "../../../assets/common/baseUrl"
 
+
+
+
+
+
 var { width, height } = Dimensions.get('window')
 
 
 const Confirm = (props) => {
 
     const finalOrder = props.route.params;
+   
     
 
-    const confirmOrder = () => {
+    // const confirmOrder = () => {
 
-        const order = finalOrder.order.order;
-        console.log(order)
+    //     const order = finalOrder.order.order;
+        
+    //     console.log(order)
 
-        axios
-        .post(`${baseURL}orders`, order)
-        .then((res) => {
-            if (res.status == 200 || res.status == 201) {
-                Toast.show({
-                    topOffset: 60,
-                    type: "success",
-                    text1: "Order Completed",
-                    text2: "",
-                })
-                setTimeout(() => {
-                    props.clearCart();
-                    props.navigation.navigate("Cart")
-                }, 500)
-            }
-        })
-        .catch((error) => {
-            Toast.show({
-                topOffset: 60,
-                type: "error",
-                text1: "Something went wrong",
-                text2: `Error:${error.name}`,
-            })
-        })
+    //     axios
+    //     .post(`${baseURL}orders`, order)
+    //     .then((res) => {
+    //         if (res.status == 200 || res.status == 201) {
+    //             Toast.show({
+    //                 topOffset: 60,
+    //                 type: "success",
+    //                 text1: "Order Completed",
+    //                 text2: "",
+    //             })
+    //             setTimeout(() => {
+    //                 props.clearCart();
+    //                 props.navigation.navigate("Cart")
+    //             }, 500)
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         Toast.show({
+    //             topOffset: 60,
+    //             type: "error",
+    //             text1: "Something went wrong",
+    //             text2: `Error:${error.name}`,
+    //         })
+    //     })
 
         
-    }
+    // }
 
     return(
         <ScrollView contentContainerStyle={styles.container}>
@@ -58,14 +65,20 @@ const Confirm = (props) => {
                 </Text>
                 {props.route.params ? 
                 <View style={{ borderWidth: 1, borderColor: 'orange'}}>
+
+                    <Text style={styles.title}>Payment using:</Text>
+                    <Text style={{textAlign:'center',fontSize:20}}>
+                        {finalOrder.payvia}</Text>
+
                     <Text style={styles.title}>Shipping to:</Text>
-                    <View style={{ padding: 8 }}>
+                    <View style={{ padding: 8,alignItems:'center' }}>
                         <Text>Address: {finalOrder.order.order.shippingAddress1}</Text>
                         <Text>Address2: {finalOrder.order.order.shippingAddress2}</Text>
                         <Text>City: {finalOrder.order.order.city}</Text>
                         <Text>Zip Code: {finalOrder.order.order.zip}</Text>
                         <Text>Country: {finalOrder.order.order.country}</Text>
                     </View>
+
                     <Text style={styles.title}>Items:</Text>
                     {finalOrder.order.order.orderItems.map((x) => {
                         return (
@@ -82,7 +95,7 @@ const Confirm = (props) => {
                                         <Text>{x.product.name}</Text>
                                     </Left>
                                     <Right>
-                                        <Text>$ {x.product.price}</Text>
+                                        <Text>${x.product.price}</Text>
                                     </Right>
                                 </Body>
                             </ListItem>
@@ -91,8 +104,10 @@ const Confirm = (props) => {
                 </View>    
            : null }
            <View style={{ alignItems: 'center', margin: 20 }}>
-                <Button title={'Place order'} 
-                onPress={confirmOrder}
+                <Button title={'Complete Payment'} 
+                // onPress={confirmOrder}
+                onPress={()=>props.navigation.navigate('StripeGate',{
+                                                        order:finalOrder.order.order})}
                 />
            </View>
             </View>

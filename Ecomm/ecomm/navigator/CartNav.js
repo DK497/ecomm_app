@@ -1,33 +1,47 @@
 import React from 'react'
-import {  createStackNavigator} from "@react-navigation/stack";
-import  Cart  from "../Screens/Cart/Cart";
-import Checkout from "../Screens/Cart//Checkout/Checkout";
+import { createStackNavigator } from "@react-navigation/stack";
+import Cart from "../Screens/Cart/Cart";
 import CheckoutNav from './CheckoutNav';
-import Payment from '../Screens/Cart/Checkout/Payment';
-
-import Login from '../Screens/User/Login'
+import StripeGate from '../Screens/Cart/Checkout/StripeGate';
 
 
 
-const Stack=createStackNavigator()
 
-function MyStack()  {
+const Stack = createStackNavigator()
+
+function MyStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen 
+            <Stack.Screen
+
                 name='Cart'
                 component={Cart}
                 options={{
                     headerShown: false,
                 }}
             />
-            
-            
+
+            <Stack.Screen
+
+                name='Checkout'
+                component={CheckoutNav}
+                options={{
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen
+
+                name='StripeGate'
+                component={StripeGate}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </Stack.Navigator>
     )
 }
 
-export default function CartNav(){
-    return <MyStack/>
+export default function CartNav() {
+    return <MyStack />
 }
 

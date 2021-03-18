@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './shared/Header'
 import { NavigationContainer } from "@react-navigation/native";
-
 import Toast from 'react-native-toast-message';
 
 // Redux
@@ -14,8 +13,9 @@ import Auth from './Context/store/Auth'
 // Navigators
 import Mainnav from './navigator/Mainnav';
 
-export default function App() {
-  return (
+function App() {
+  
+   return (
     <Auth>
         <Provider store={store}>
       <NavigationContainer>
@@ -36,5 +36,5 @@ export default function App() {
   );
 };
 
-
+export default App;
 

@@ -37,6 +37,13 @@ const EasyButton = styled.TouchableOpacity`
     }
 
     ${(props) => 
+        props.darkg &&
+        css`
+            background: #006400
+        `
+    }
+
+    ${(props) => 
         props.large &&
         css`
             width: 135px

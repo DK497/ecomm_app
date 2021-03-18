@@ -4,7 +4,7 @@ import { Container, Left, Right } from "native-base"
 import { useFocusEffect } from "@react-navigation/native"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-// import OrderCard from "../../Shared/OrderCard"
+import OrderCard from "../../shared/OrderCard"
 
 import axios from "axios"
 import baseURL from "../../assets/common/baseUrl"
@@ -17,7 +17,7 @@ import EasyButton from '../../shared/styledcomp/EasyButton';
 const UserProfile = (props) => {
     const context = useContext(AuthGlobal)
     const [userProfile, setUserProfile] = useState()
-    const [orders, setOrders] = useState()
+    const [orders, setOrders] = useState([])
 
     useFocusEffect(
         useCallback(() => {
@@ -34,6 +34,8 @@ const UserProfile = (props) => {
                     // console.log(`id:${context.stateUser.user.userId}`)
                     // console.log(`response:${res}`)
                     // ..user.sub gives id
+
+                    // fetching user info
                     axios
                         .get(`${baseURL}users/${context.stateUser.user.userId}`, {
                             headers: { Authorization: `Bearer ${res}` },
@@ -42,21 +44,24 @@ const UserProfile = (props) => {
                             // console.log(`from UserProfile useEffect`)
                             setUserProfile(res.data)
                         })
-                        .catch(err => console.log('error '))
+                        .catch(err => console.log('UserProfile Error1:',err.name))
                 })
-                .catch((error) => console.log('error is threr'))
+                .catch((error) => console.log('UserProfile Error2 :',error.name))
 
-            // axios
-            // .get(`${baseURL}orders`)
-            // .then((x) => {
-            //     const data = x.data;
-            //     console.log(data)
-            //     const userOrders = data.filter(
-            //         (order) => order.user._id === context.stateUser.user.sub
-            //     );
-            //     setOrders(userOrders);
-            // })
-            // .catch((error) => console.log(error))
+
+            // fetching order detail of users
+            axios
+            .get(`${baseURL}orders`)
+            .then((res) => {
+                const data = res.data;
+                // console.log("Complete:",data)
+                const userOrders = data.filter(
+                    (order) => order.user._id === context.stateUser.user.userId
+                );
+                setOrders(userOrders);
+                // console.log("user:",userOrders)
+            })
+            .catch((error) => console.log(error))
 
             return () => {
                 setUserProfile();
@@ -92,23 +97,18 @@ const UserProfile = (props) => {
                    
                    
 
-                        <EasyButton secondary medium
-                            onPress={() => props.navigation.navigate('Checkout')}
-                        >
-
-                            <Text>Checkout</Text>
-                        </EasyButton >
+                        
                   
 
                 </View>
 
-                {/* <View style={styles.order}>
+                <View style={styles.order}>
 
                     <Text style={{ fontSize: 20 }}>My Orders</Text>
                     <View>
                         {orders ? (
                             orders.map((x) => {
-                                return <OrderCard key={x.id} {...x} />;
+                                return <OrderCard key={x.id} {...x} />
                             })
                         ) : (
                             <View style={styles.order}>
@@ -116,7 +116,7 @@ const UserProfile = (props) => {
                             </View>
                         )}
                     </View>
-                </View> */}
+                </View> 
 
 
             </ScrollView>
