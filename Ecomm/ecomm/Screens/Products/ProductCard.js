@@ -13,6 +13,9 @@ import Toast from 'react-native-toast-message';
 var {width}=Dimensions.get("window");
 
 const mapDispatchToProps=(dispatch)=>{
+    // the dispatch keyword implements in reducer
+    // all functions need to be called using dispatch as action objects is always returmned
+    // which need to be mapped to reducer to change state
     return{
         addItemToCart:(product)=>{
             dispatch(actions.addToCart({quantity:1,product}))
@@ -27,8 +30,8 @@ const ProductCard = (props) => {
     return (
         <View style={styles.container}>
             <Image style={styles.image}
-              resizeMode='contain'
-        source={{uri:image?image:'https://www.freepngimg.com/download/motorcycle/12-motorbiker-on-motorcycle-png-image-man-on-motorcycle-png-image.png'}}
+              resizeMode='center'
+        source={{uri:image?image:'https://bitsofco.de/content/images/2018/12/broken-1.png'}}
         />
             <View style={styles.card}>
             <Text style={styles.title}>

@@ -1,5 +1,5 @@
 import { Container, Header, Item, Icon, Input } from 'native-base';
-import React, { useEffect, useState,useCallback } from 'react'
+import React, {  useState,useCallback } from 'react'
 import { View, Text, StyleSheet, ScrollView,Dimensions,ActivityIndicator } from 'react-native'
 import Banner from '../../shared/Banner';
 import CategoryFilter from './CategoryFilter';
@@ -18,7 +18,7 @@ var { height } = Dimensions.get('window')
 
 
 
-const numColumns = 2;
+// const numColumns = 2;
 const ProductContainer = (props) => {
 
     const [products, setproducts] = useState([])
@@ -50,11 +50,11 @@ const ProductContainer = (props) => {
                     setinitialstate(res.data)
                     setloading(false)
                 })
-                .catch(err=>console.log("APi cal error"))
+                .catch(err=>console.log("Product CONtainer:products APi cal error"))
         
                 axios.get(`${baseURL}categories`)
                 .then(res=>{setcat(res.data)})
-                .catch(err=>console.log("APi cal error"))
+                .catch(err=>console.log("Product CONtainer:categories APi cal error"))
         
         
                 // cleanupcode
@@ -74,6 +74,7 @@ const ProductContainer = (props) => {
 
 
     const searchProduct = (text) => {
+        // changing prodfiltered on search
         setprodfiltered(
             products.filter(i => i.name.toLowerCase().includes(text.toLowerCase()))
         )
@@ -83,10 +84,12 @@ const ProductContainer = (props) => {
 
 
     const openList = () => {
+        // used by search bar
         setfocus(true)
     }
 
     const onBlur = () => {
+        // used by search bar
         setfocus(false)
     }
     // Categories
@@ -102,13 +105,13 @@ const ProductContainer = (props) => {
         }
     }
 
-    console.log(focus)
+    // console.log("ProductContainer:focus",focus)
     return (
         <>
         {loading===false?(
         <Container style={styles.container} >
-            <Header searchBar rounded style={{backgroundColor:'#03f0fc'}}>
-                <Item>
+            <Header searchBar rounded style={{backgroundColor:'#00003f'}}>
+                <Item style={{borderRadius:100}}>
                     <Icon name="ios-search" />
 
                     <Input placeholder="Search"
@@ -122,10 +125,11 @@ const ProductContainer = (props) => {
                 <SearchProduct navigation={props.navigation}
                 prodfiltered={prodfiltered} />
             ) : (
-            <ScrollView style={{flex:8}} >
+            <ScrollView style={{flex:1}} >
                 
                     {/* cat contain categories id and name */}
                     <View style={{flex:2}}>
+                        {/* category filter */}
                         <CategoryFilter cat={cat} categfilter={changeCtg}
                             pcateg={pcateg}
                             active={active} setactive={setactive}

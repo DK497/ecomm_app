@@ -29,7 +29,8 @@ const CategoryFilter = (props) => {
                     <TouchableOpacity
                     key={i._id} onPress={()=>{
                                      props.categfilter(i._id)
-                                     props.setactive(props.cat.indexOf(i))}}> 
+                                     props.setactive(props.cat.indexOf(i))
+                                     }}> 
                     
                     <Badge
                         style={[styles.center, { margin: 5 },
@@ -40,6 +41,7 @@ const CategoryFilter = (props) => {
                 </TouchableOpacity>
 
                 ))
+               
 
                 }
             </ListItem>

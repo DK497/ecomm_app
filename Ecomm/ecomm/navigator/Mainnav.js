@@ -1,5 +1,5 @@
 import React,{useContext} from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import {  View } from 'react-native'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -25,8 +25,9 @@ const context=useContext(AuthGlobal)
             keyboardHidesTabBar: true,
             showLabel: false,
             //   colorise active icon with color
-            activeTintColor: "#e91e63",
-        }}>
+            activeTintColor: "#000058",
+        }
+        }>
         <Tab.Screen
             name="Home"
             component={HomeNav}

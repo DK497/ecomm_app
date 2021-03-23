@@ -7,9 +7,9 @@ const Header = () => {
             <Image
                 source={require("../assets/Logo.png")}
                 resizeMode="contain"
-                style={{ height: 50 }}
+                style={{ height: 50,marginTop:10 }}
             />
-            {/* <Text>Fast-Cart</Text> */}
+           
         </SafeAreaView>
     )
 }
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignContent: "center",
         justifyContent: "center",
-        padding: 15,
-        // backgroundColor:'lightgrey'
+        // padding: ,
+        backgroundColor:'#00003f'
     }
 })
 

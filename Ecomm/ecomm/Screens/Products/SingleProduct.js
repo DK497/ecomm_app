@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native'
 import { Left, Right, Container, H1, Button } from "native-base";
 
+// redux
 import { connect } from "react-redux";
 import * as actions from "../../redux/Actions/cartActions";
+
 import Toast from 'react-native-toast-message';
 import EasyButton from '../../shared/styledcomp/EasyButton';
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Header from './shared/Header'
 import { NavigationContainer } from "@react-navigation/native";
 import Toast from 'react-native-toast-message';
@@ -14,22 +14,22 @@ import Auth from './Context/store/Auth'
 import Mainnav from './navigator/Mainnav';
 
 function App() {
-  
-   return (
+
+  return (
     <Auth>
-        <Provider store={store}>
-      <NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
 
-        <Header />
-        <Mainnav />
-        {/* to make Toast available in all components */}
-        <Toast ref={(ref) => Toast.setRef(ref)} />
+          <Header />
+          <Mainnav />
+          {/* to make Toast available in all components */}
+          <Toast ref={(ref) => Toast.setRef(ref)} />
 
-      </NavigationContainer>
-    </Provider>
+        </NavigationContainer>
+      </Provider>
 
     </Auth>
-    
+
 
 
 

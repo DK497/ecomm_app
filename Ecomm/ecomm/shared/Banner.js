@@ -27,21 +27,21 @@ const Banner = () => {
             <View style={styles.container}>
                 <View style={styles.swiper}>
                     <Swiper style={{ height: width / 2 }}
-                        showButtons={false} autoplay={true}
-                        autoplayTimeout={2}>
+                        showButtons={true} autoplay={true}
+                        autoplayTimeout={3}>
                         {banner.map((item) => {
                             return (
                                 <Image
                                     key={item}
                                     style={styles.imageBanner}
-                                    resizeMode="contain"
-                                    source={{ uri: item }}
+                                    resizeMode='cover'
+                                    source={{ uri: item?item:'https://bitsofco.de/content/images/2018/12/broken-1.png'}}
                                 />
                             );
                         })}
 
                     </Swiper>
-                    <View style={{ height: 20 }}></View>
+                    <View style={{ height: 10 }}></View>
                 </View>
             </View>
         </ScrollView>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     imageBanner: {
         height: width / 2,
         width: width - 40,
-        borderRadius: 10,
+        borderRadius: 15,
         marginHorizontal: 20,
     },
 });
