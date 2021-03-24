@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet,  View } from 'react-native'
-import { Container, Text, Left, Right, H1, ListItem, Thumbnail, Body, Button, Icon, Badge } from "native-base"
+import { Container, Text, Left, Right, H1, ListItem, Thumbnail, Body , Icon, Badge } from "native-base"
+import EasyButton from '../../shared/styledcomp/EasyButton'
 
 const CartItem = (props) => {
     const data = props.item.item.product
@@ -19,6 +20,11 @@ const CartItem = (props) => {
                 <Right>
                     <Text>{data.price}</Text>
                 </Right>
+                {/* <Right>
+                   <EasyButton small primary onPress={()=>setquantity(quantity+1)}>
+                       <Text>Click</Text>
+                   </EasyButton>
+                </Right> */}
             </Body>
         </ListItem>
     )

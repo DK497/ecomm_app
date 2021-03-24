@@ -120,7 +120,7 @@ const PaymentView = (props) => {
         <!-- product info -->
         <div class="container-fluid">
         <div class="row">
-                <h1 class="header">Stripe Payment UI</h1>
+                <h1 class="header">Stripe Custom UI</h1>
             </div>
             <div class="row">
                 <div class="products-info">
@@ -321,7 +321,7 @@ const PaymentView = (props) => {
 
     return <WebView
         javaScriptEnabled={true}
-        style={{ flex: 1 }}
+        style={{ flex: 1 ,marginTop:'10%'}}
         originWhitelist={['*']}
         source={{ html: htmlContent }}
         injectedJavaScript={injectedJavaScript}

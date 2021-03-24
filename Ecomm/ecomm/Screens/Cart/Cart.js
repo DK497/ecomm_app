@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native'
 import {
-    Container, Text, Left, Right, H1, H2, ListItem, Thumbnail, Body, Button,
-    Icon, Badge
-} from "native-base";
+    Container, Text, Left, Right, H1, H2, 
+    Icon} from "native-base";
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 
 var { height, width } = Dimensions.get('window')
 
+// Redux
 import { connect } from "react-redux";//to have access to states in store a props
-
 import * as actions from "../../redux/Actions/cartActions";
+
 import CartItem from './CartItem';
 import EasyButton from '../../shared/styledcomp/EasyButton';
 
@@ -20,6 +20,7 @@ import AuthGlobal from "../../Context/store/AuthGlobal";
 
 const mapStateToProps = (state) => {
     const { cartItems } = state
+    console.log('CArt:',state)
 
     return {
         cartItems: cartItems
@@ -48,7 +49,7 @@ const Cart = (props) => {
     props.cartItems.forEach(i => (
         total += i.product.price
     ))
-
+//  console.log("CArt",context.stateUser)
 
     return (
         <>
@@ -56,8 +57,7 @@ const Cart = (props) => {
                 props.cartItems.length > 0 ?
                     <Container >
                         <H1 style={{
-                            alignSelf: 'center', borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10, backgroundColor: '#3b6fbf', color: 'white',
+                            alignSelf: 'center',marginTop:'2.5%',
                             height: 40
                         }}>
                             Cart </H1>
@@ -123,6 +123,7 @@ const Cart = (props) => {
 
                                     <Text>Checkout</Text>
                                 </EasyButton >) : 
+                                // nested navigation
                                 (<EasyButton secondary medium
                                     onPress={() => props.navigation.navigate('User',{ screen: 'Login' })}
                                 >

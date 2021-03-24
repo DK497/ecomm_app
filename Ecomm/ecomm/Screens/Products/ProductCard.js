@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View,Image,Dimensions, Button } from 'react-native'
+import { StyleSheet, Text, View,Image,Dimensions} from 'react-native'
 
 import EasyButton from '../../shared/styledcomp/EasyButton';
 
@@ -58,7 +58,7 @@ const ProductCard = (props) => {
                         })
 
                   }}>
-                      <Text style={{color:"white"}}>Add</Text>
+                      <Text style={{color:"white"}}>ADD</Text>
                       </EasyButton>  
             </View>
             :
@@ -77,14 +77,14 @@ const styles = StyleSheet.create({
         height: width / 1.7,
         padding: 10,
         borderRadius: 10,
-        marginTop: 55,
+        marginTop: 40,
         marginBottom: 5,
         marginLeft: 5,
         alignItems: 'center',
         elevation: 8,
-        backgroundColor: 'white',
-        // borderWidth:5,
-        // borderColor:'red'
+        backgroundColor: '#ffffc6',
+        borderWidth:1,
+        borderColor:'#777700'
     },
     image: {
         width: width / 2 - 20 - 10,

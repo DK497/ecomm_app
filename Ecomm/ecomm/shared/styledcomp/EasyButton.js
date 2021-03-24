@@ -60,7 +60,7 @@ const EasyButton = styled.TouchableOpacity`
     ${(props) => 
         props.small &&
         css`
-            width: 40px
+            width: 60px
         `
     }
 `;

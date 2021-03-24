@@ -6,7 +6,8 @@ const CategoryFilter = (props) => {
     return (
         <ScrollView
             bounces={true} horizontal={true}
-            style={{ backgroundColor: "#f2f2f2" }} >
+            style={{ backgroundColor: "#ffffb2",borderBottomWidth:2,borderColor:'#505000',
+            borderBottomLeftRadius:30,borderBottomRightRadius:30}} >
             <ListItem style={{ margin: 0, padding: 0, borderRadius: 0 }}>
                 
                 <TouchableOpacity
@@ -27,9 +28,9 @@ const CategoryFilter = (props) => {
                  {/* for other categories in categ.json */}
                 {props.cat.map(i=>(
                     <TouchableOpacity
-                    key={i._id} onPress={()=>{
-                                     props.categfilter(i._id)
-                                     props.setactive(props.cat.indexOf(i))
+                    key={i._id} 
+                    onPress={()=>{props.categfilter(i._id)
+                                    props.setactive(props.cat.indexOf(i))
                                      }}> 
                     
                     <Badge
@@ -55,10 +56,10 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     active: {
-        backgroundColor: '#03bafc'
+        backgroundColor: '#880000'
     },
     inactive: {
-        backgroundColor: '#a0e1eb'
+        backgroundColor: '#FF0000'
     }
 })
 

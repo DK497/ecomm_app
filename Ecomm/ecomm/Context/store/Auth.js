@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer, userEffect, useState } from "react";
+// Store in Context
+import React, { useEffect, useReducer, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
@@ -15,30 +16,31 @@ const Auth = props => {
 
     useEffect(() => {
         setShowChild(true);
+        
         if (AsyncStorage.jwt) {
             const decoded = AsyncStorage.jwt ? AsyncStorage.jwt : "";
             if (setShowChild) {
                 dispatch(setCurrentUser(jwt_decode(decoded)))
+                console.log('AUth',jwt_decode(decoded))
             }
         }
         return () => setShowChild(false);
     }, [])
 
 
-    if (!showChild) {
+    if (!showChild) 
+    {
         return null;
-    } else {
+    } 
+    else 
+    {
         return (
             <AuthGlobal.Provider
-                value={{
-                    stateUser,
-                    dispatch
-                }}
-            >
+                value={{stateUser,dispatch }}>
                 {props.children}
             </AuthGlobal.Provider>
         )
     }
-};
+}
 
 export default Auth;

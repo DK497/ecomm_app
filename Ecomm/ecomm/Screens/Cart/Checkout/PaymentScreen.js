@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch) => {
         clearCart: () => dispatch(actions.clearCart())
     }
 }
+
 const OpenURLButton = ({ url, children }) => {
     const handlePress = useCallback(async () => {
         // Checking if the link is supported for links with custom URL scheme.
@@ -49,6 +50,7 @@ const PaymentScreen = (props) => {
     // console.log("paymentscreen3:", total)
 
     const cartInfo = {
+        // id should be unique
         id: '5eruyt35eggr76476236523t3',
         description: 'Easy Cart order',
         amount: total
@@ -205,7 +207,7 @@ const PaymentScreen = (props) => {
                 </View>
 
             } else {
-                // show to make payment
+                // 2nd screen shown to make payment
                 return <PaymentView onCheckStatus={onCheckStatus} product={cartInfo.description} amount={cartInfo.amount}
 
                     city={props.order.zip} address={`${props.order.shippingAddress1} ${props.order.shippingAddress2}`}

@@ -1,14 +1,16 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState,useCallback } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import FormContainer from "../../shared/Form/FormContainer";
 import Input from "../../shared/Form/Input";
 import Error from "../../shared/Error";
+import { useFocusEffect } from '@react-navigation/native';
 
 
 // Context
 import AuthGlobal from "../../Context/store/AuthGlobal";
-// importing actions as functions
+// importing actions as functions from context
 import { loginUser } from "../../Context/actions/Auth.actions";
+
 import EasyButton from "../../shared/styledcomp/EasyButton";
 
 const Login = (props) => {
@@ -17,14 +19,20 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    // accessing state by context.stateUser.isAuthenticated
+  useFocusEffect((
+    useCallback(
+      () => {
+        // accessing state by context.stateUser.isAuthenticated
     // isAuthenticated gets true after exexutin Auth.action and Auth.reducer
     console.log(context.stateUser.isAuthenticated)
     if (context.stateUser.isAuthenticated === true) {
       props.navigation.navigate("User Profile");
     }
-  }, [context.stateUser.isAuthenticated]);
+      },
+      [context.stateUser.isAuthenticated],
+    )
+  ))
+
 
   const handleSubmit = () => {
     const user = {

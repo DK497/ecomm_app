@@ -4,6 +4,8 @@ import {
     CLEAR_CART
 } from '../constants';
 
+// each of these function returns action object{type,payload}
+
 export const addToCart = (payload) => {
     return {
         type: ADD_TO_CART,

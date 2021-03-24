@@ -5,6 +5,7 @@ import baseURL from "../../assets/common/baseUrl"
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
+
 export const loginUser = (user, dispatch) => {
     console.log(`user:${user}`)
     
@@ -20,13 +21,15 @@ export const loginUser = (user, dispatch) => {
     .then((res) => res.json())
     .then((data) => {
         if (data) {
+            // token has isAdmin info as well
             const token = data.token;
             // storing token received with name jwt(can be anything)
             AsyncStorage.setItem("jwt", token)
             const decoded = jwt_decode(token)
-            console.log(`decoded:${decoded},original_token:${token}`)
+            console.log(`Auth.actions decoded:${decoded},original_token:${token}`)
             
             dispatch(setCurrentUser(decoded, user))
+            // it will be executed using reducer
         } else { 
             // if we dont have data
            logoutUser(dispatch)
@@ -41,6 +44,7 @@ export const loginUser = (user, dispatch) => {
             text2: `${err.name}`
         });
         logoutUser(dispatch)
+        // sending dispatch as it might need to use reducer
     });
 };
 

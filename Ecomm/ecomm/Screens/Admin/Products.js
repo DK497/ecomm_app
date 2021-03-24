@@ -1,8 +1,6 @@
 import React, { useState, useCallback } from "react";
 import {
-    View, Text, FlatList, ActivityIndicator, StyleSheet, Dimensions, Button
-}
-    from "react-native";
+    View, Text, FlatList, ActivityIndicator, StyleSheet, Dimensions, Button} from "react-native";
 import { Header, Item, Input } from "native-base"
 import Icon from "react-native-vector-icons/FontAwesome"
 import { useFocusEffect } from "@react-navigation/native"
