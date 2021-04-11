@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Linking,Button } from 'react-native'
+import {Icon} from 'native-base'
 import PaymentView from './PaymentView'
+// import PaymentView from './new'
 import axios from 'axios';
 import baseURL from '../../../assets/common/baseUrl';
 import EasyButton from '../../../shared/styledcomp/EasyButton';
@@ -32,6 +34,7 @@ const OpenURLButton = ({ url, children }) => {
 
     return <Button title={children} onPress={handlePress} />;
 };
+
 const PaymentScreen = (props) => {
     // to get complete detail of order
     // console.log("paymentscreen:", props.order)
@@ -143,14 +146,15 @@ const PaymentScreen = (props) => {
 
         if (!makePayment) {
             // 1st screen to show
+            console.log("payment1",response)
             return (
-                <View style={{
+                <View style={{flex:1,
                     display: 'flex', flexDirection: 'column',
                     justifyContent: 'center', alignItems: 'center', height: 300,
-                    marginTop: 50, backgroundColor: 'grey'
+                     backgroundColor: '#000026'
                 }}>
 
-                    <Text style={{ fontSize: 25, margin: 10, color: 'white' }}> Make Payment </Text>
+                    <Text style={{ fontSize: 25, margin: 10, color: 'white' }}> MAKE PAYMENT</Text>
                     <Text style={{ fontSize: 16, margin: 10, color: 'white' }}>
                         Email: {props.order.userProfile.email} </Text>
                     <Text style={{ fontSize: 16, margin: 10, color: 'white' }}>
@@ -161,18 +165,15 @@ const PaymentScreen = (props) => {
                     <Text style={{ fontSize: 16, margin: 10, color: 'white' }}>
                         Payable Amount: {cartInfo.amount} </Text>
 
-                    <TouchableOpacity style={{
-                        height: 60, width: 300, backgroundColor: '#FF5733',
-                        borderRadius: 30, justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
+                    <EasyButton warning 
                         onPress={() => { setMakePayment(true) }}
                     >
-                        <Text style={{ color: '#FFF', fontSize: 20 }}>
+                        <Text style={{ color: '#800000', fontSize: 25,textAlign:'center' }}>
                             Proceed To Pay
                         </Text>
+                        <Icon name="caret-forward-outline" style={{color:'#fff'}}/>
 
-                    </TouchableOpacity>
+                    </EasyButton>
 
 
                 </View>
@@ -185,6 +186,7 @@ const PaymentScreen = (props) => {
         else {
 
             if (response !== undefined) {
+                console.log("payment3")
                 // when payment successful  
                 return <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 300, marginTop: 50 }}>
                     <Text style={{ fontSize: 25, margin: 10 }}> {paymentStatus} </Text>
@@ -203,11 +205,12 @@ const PaymentScreen = (props) => {
                                 Press to try Again
                             </Text>
                         </EasyButton>}
-                    <Text style={{ fontSize: 16, margin: 10 }}> {response} </Text>
+                    <Text style={{ fontSize: 16, margin: 10 }}> Response:{response} </Text>
                 </View>
 
             } else {
                 // 2nd screen shown to make payment
+                console.log("payment2",response)
                 return <PaymentView onCheckStatus={onCheckStatus} product={cartInfo.description} amount={cartInfo.amount}
 
                     city={props.order.zip} address={`${props.order.shippingAddress1} ${props.order.shippingAddress2}`}
@@ -223,6 +226,7 @@ const PaymentScreen = (props) => {
 
     return (
         <View style={styles.container}>
+           
             {paymentUI()}
         </View>)
 }

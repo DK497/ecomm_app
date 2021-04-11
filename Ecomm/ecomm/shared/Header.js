@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Image, SafeAreaView, View,Text } from "react-native"
 
+
 const Header = () => {
     return(
         <SafeAreaView style={styles.header}>

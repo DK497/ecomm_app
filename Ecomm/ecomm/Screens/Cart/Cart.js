@@ -81,6 +81,7 @@ const Cart = (props) => {
                             renderItem={(data) => <CartItem item={data} />}
                             // to access single item data.item.product
                             renderHiddenItem={data => (
+                               console.log('yo',data.item),
                                 <View style={styles.hiddenContainer}>
                                     <TouchableOpacity style={styles.hiddenButton}
                                         onPress={() => props.clearSingle(data.item)}

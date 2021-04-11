@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './shared/Header'
 import { NavigationContainer } from "@react-navigation/native";
 import Toast from 'react-native-toast-message';
@@ -13,13 +13,19 @@ import Auth from './Context/store/Auth'
 // Navigators
 import Mainnav from './navigator/Mainnav';
 
+
+// AlanAI
+import Alan from './Alan';
+
 function App() {
+
+
 
   return (
     <Auth>
       <Provider store={store}>
         <NavigationContainer>
-
+          <Alan/>
           <Header />
           <Mainnav />
           {/* to make Toast available in all components */}
